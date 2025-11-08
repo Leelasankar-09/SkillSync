@@ -1,36 +1,51 @@
-// Simulated user storage (in a real app, this would be a database)
-let users = [
-  { email: "test@example.com", password: "123456", name: "Test User" }
-];
+// ===========================
+// Simulated User "Database"
+// (Stored in browser localStorage for persistence)
+// ===========================
 
+function getUsers() {
+  return JSON.parse(localStorage.getItem("skillsync_users") || "[]");
+}
+
+function saveUsers(users) {
+  localStorage.setItem("skillsync_users", JSON.stringify(users));
+}
+
+// ---------------------------
+// LOGIN API
+// ---------------------------
 export async function loginApi({ email, password }) {
-  // Basic validation
   if (!email || !password) {
     return { success: false, message: "Email and password are required" };
   }
 
-  // For testing: Accept any email/password combination that's valid
-  if (email.includes('@') && password.length >= 6) {
-    return { 
-      success: true, 
-      token: "dummy-token", 
-      user: { 
-        email,
-        name: email.split('@')[0] 
-      } 
-    };
+  const users = getUsers();
+  const user = users.find((u) => u.email === email && u.password === password);
+
+  if (!user) {
+    return { success: false, message: "Invalid credentials ❌" };
   }
 
-  return { success: false, message: "Invalid credentials. Password should be at least 6 characters." };
+  return {
+    success: true,
+    token: "dummy-token",
+    user: {
+      email: user.email,
+      name: user.fullName,
+    },
+    message: `Welcome back ${user.fullName}! ✅`,
+  };
 }
 
+// ---------------------------
+// REGISTER API
+// ---------------------------
 export async function registerApi({ fullName, email, password }) {
-  // Basic validation
-  if (!email || !password || !fullName) {
+  if (!fullName || !email || !password) {
     return { success: false, message: "All fields are required" };
   }
 
-  if (!email.includes('@')) {
+  if (!email.includes("@")) {
     return { success: false, message: "Invalid email format" };
   }
 
@@ -38,8 +53,18 @@ export async function registerApi({ fullName, email, password }) {
     return { success: false, message: "Password must be at least 6 characters" };
   }
 
-  // Store the new user (in a real app, this would go to a database)
-  users.push({ email, password, name: fullName });
+  const users = getUsers();
 
-  return { success: true, userId: users.length };
+  // Check if user already exists
+  const existingUser = users.find((u) => u.email === email);
+  if (existingUser) {
+    return { success: false, message: "User already exists ❗" };
+  }
+
+  // Register new user
+  const newUser = { fullName, email, password };
+  users.push(newUser);
+  saveUsers(users);
+
+  return { success: true, userId: users.length, message: "Registration successful 🎉" };
 }

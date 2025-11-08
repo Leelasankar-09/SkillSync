@@ -9,12 +9,11 @@ import { loginApi, registerApi } from "../model/authModel";
  */
 export async function loginUser(credentials) {
   try {
-    // Input validation
     if (!credentials.email || !credentials.password) {
       return { success: false, message: "Email and password are required" };
     }
 
-    if (!credentials.email.includes('@')) {
+    if (!credentials.email.includes("@")) {
       return { success: false, message: "Please enter a valid email" };
     }
 
@@ -22,27 +21,19 @@ export async function loginUser(credentials) {
       return { success: false, message: "Password must be at least 6 characters" };
     }
 
-    // Call login API
     const res = await loginApi(credentials);
-    
+
     if (res.success) {
-      // Store auth token if needed
       if (res.token) {
-        localStorage.setItem('authToken', res.token);
+        localStorage.setItem("authToken", res.token);
       }
-      return res;
+      return { success: true, message: res.message || "Login successful" };
     }
 
-    return { 
-      success: false, 
-      message: res.message || "Invalid credentials" 
-    };
+    return { success: false, message: res.message || "Invalid credentials" };
   } catch (error) {
-    console.error('Login error:', error);
-    return { 
-      success: false, 
-      message: "An error occurred during login" 
-    };
+    console.error("Login error:", error);
+    return { success: false, message: "An error occurred during login" };
   }
 }
 
@@ -56,12 +47,11 @@ export async function loginUser(credentials) {
  */
 export async function registerUser(data) {
   try {
-    // Input validation
     if (!data.fullName || !data.email || !data.password) {
       return { success: false, message: "All fields are required" };
     }
 
-    if (!data.email.includes('@')) {
+    if (!data.email.includes("@")) {
       return { success: false, message: "Please enter a valid email" };
     }
 
@@ -73,22 +63,15 @@ export async function registerUser(data) {
       return { success: false, message: "Please enter a valid name" };
     }
 
-    // Call register API
     const res = await registerApi(data);
-    
+
     if (res.success) {
-      return res;
+      return { success: true, message: res.message || "Registration successful" };
     }
 
-    return { 
-      success: false, 
-      message: res.message || "Registration failed" 
-    };
+    return { success: false, message: res.message || "Registration failed" };
   } catch (error) {
-    console.error('Registration error:', error);
-    return { 
-      success: false, 
-      message: "An error occurred during registration" 
-    };
+    console.error("Registration error:", error);
+    return { success: false, message: "An error occurred during registration" };
   }
 }

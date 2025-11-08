@@ -59,7 +59,7 @@ export default function LoginPage() {
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -70,7 +70,7 @@ export default function LoginPage() {
             type="password"
             placeholder="Enter your password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
@@ -79,7 +79,7 @@ export default function LoginPage() {
           </Button>
 
           <div className="auth-note">
-            Don&apos;t have an account? <Link to="/register">Sign up</Link>
+            Don’t have an account? <Link to="/register">Sign up</Link>
           </div>
         </form>
       </div>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../controller/authcontroller";
 import Button from "../../../components/button";
+import Card from "../../../components/Card/Card";
+import "./loginPage.css";
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
@@ -30,75 +32,94 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>Create account</h2>
-        <div className="auth-sub">Join Skill Sync to find your perfect team</div>
-        {err && <p className="error-msg">{err}</p>}
+      <div className="auth-left">
+        <h1 className="logo">SKILLSYNC</h1>
 
-        <label htmlFor="fullname">Full Name</label>
-        <input
-          id="fullname"
-          className="auth-input"
-          type="text"
-          placeholder="Enter your full name"
-          value={fullName}
-          onChange={e => setFullName(e.target.value)}
-          required
-          autoComplete="name"
-        />
-
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          className="auth-input"
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          className="auth-input"
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-          autoComplete="new-password"
-          minLength={8}
-        />
-
-        <label htmlFor="confirm">Confirm Password</label>
-        <input
-          id="confirm"
-          className="auth-input"
-          type="password"
-          placeholder="Confirm your password"
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
-          required
-          autoComplete="new-password"
-          minLength={8}
-        />
-
-        <Button 
-          type="submit" 
-          variant="primary"
-          size="medium"
-          fullWidth
-          disabled={!fullName || !email || !password || !confirmPassword}
-        >
-          Create Account
-        </Button>
-
-        <div className="auth-note">
-          Already have an account? <Link to="/login">Sign in</Link>
+        <div className="card-stack">
+          <div className="card-layer layer-1">
+            <Card bg="#7e7e7e">Some Random Info</Card>
+          </div>
+          <div className="card-layer layer-2">
+            <Card bg="#bcbcbc">Some Random Info</Card>
+          </div>
+          <div className="card-layer layer-3">
+            <Card bg="#d9d9d9" borderColor="#3f82ff">
+              Some Random Info
+            </Card>
+          </div>
+          <div className="card-layer layer-4">
+            <Card bg="#ececec">Some Random Info</Card>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <div className="auth-right">
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <h2>Create account</h2>
+          <div className="auth-sub">Join Skill Sync to find your perfect team</div>
+          {err && <p className="error-msg">{err}</p>}
+
+          <label htmlFor="fullname">Full Name</label>
+          <input
+            id="fullname"
+            className="auth-input"
+            type="text"
+            placeholder="Enter your full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            className="auth-input"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            className="auth-input"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={8}
+          />
+
+          <label htmlFor="confirm">Confirm Password</label>
+          <input
+            id="confirm"
+            className="auth-input"
+            type="password"
+            placeholder="Confirm your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            minLength={8}
+          />
+
+          <Button
+            type="submit"
+            variant="primary"
+            size="medium"
+            fullWidth
+            disabled={!fullName || !email || !password || !confirmPassword}
+          >
+            Create Account
+          </Button>
+
+          <div className="auth-note">
+            Already have an account? <Link to="/login">Sign in</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
