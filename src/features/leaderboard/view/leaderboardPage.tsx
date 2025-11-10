@@ -1,5 +1,5 @@
 // src/features/leaderboard/view/leaderboardPage.tsx
-import React from "react";
+// import React from "react";
 import { getLeaderboardData } from "../controller/leaderboardController";
 import "../styles/leaderboard.css";
 

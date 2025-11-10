@@ -1,5 +1,5 @@
 // src/features/teams/view/teamspage.tsx
-import React from "react";
+// import React from "react";
 import { getTeamsData } from "../controller/teamsController";
 import "../styles/teams.css";
 

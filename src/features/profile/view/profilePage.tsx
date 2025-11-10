@@ -1,5 +1,5 @@
 // src/features/profile/view/profilepage.tsx
-import React from "react";
+// import React from "react";
 import { getProfileData } from "../controller/profileController";
 import "../styles/profile.css";
 
